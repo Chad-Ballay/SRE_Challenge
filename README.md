@@ -38,9 +38,9 @@ For this project, please think about how you would architect a scalable and secu
 1. Clone repo to your local machine
 2. Once git clone has completed, navigate into the directory via Terminal
 3. Download & Install required dependencies
-- https://www.virtualbox.org/wiki/Downloads
-- https://www.vagrantup.com/downloads.html
-- http://docs.ansible.com/ansible/latest/intro_installation.html
+  - https://www.virtualbox.org/wiki/Downloads
+  - https://www.vagrantup.com/downloads.html
+  - http://docs.ansible.com/ansible/latest/intro_installation.html
 4. Once dependencies are installed, simply start up Vagrant and it will handle the rest
-- While in SRE_Challenge directory... run: `vagrant up`
+  - While in SRE_Challenge directory... run: `vagrant up`
 5. Navigate to 192.168.50.4 in your browser of choice
