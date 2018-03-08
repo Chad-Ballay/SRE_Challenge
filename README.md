@@ -24,13 +24,13 @@ For this project, please think about how you would architect a scalable and secu
 
 <h2>Resources Used</h2>
 * Ansible
-** Automation tool that is used for configuration management, executing consistent server-side tasks, and web application deployments. This is Infrastructure as code.
-** Used Ansible modules to test server configuration & function, based off of ideas via: http://docs.ansible.com/ansible/latest/test_strategies.html 
+  - Automation tool that is used for configuration management, executing consistent server-side tasks, and web application deployments. This is Infrastructure as code.
+  - Used Ansible modules to test server configuration & function, based off of ideas via: http://docs.ansible.com/ansible/latest/test_strategies.html 
 * Vagrant
-** Used to spin up scalable virtual machines that can be leveraged for producing consistent environments
-** Uses VirtualBox to create virtualized environments
-** VM Box OS - ubuntu/trusty64
-** Specified requiring Vagrant version 1.7.0 (or above)
+  - Used to spin up scalable virtual machines that can be leveraged for producing consistent environments
+  - Uses VirtualBox to create virtualized environments
+  - VM Box OS - ubuntu/trusty64
+  - Specified requiring Vagrant version 1.7.0 (or above)
 
 <h2>How to Run</h2>
 1. Clone repo to your local machine
