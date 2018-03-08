@@ -29,7 +29,7 @@ For this project, please think about how you would architect a scalable and secu
   - Used Ansible modules to test server configuration & function, strategies used were based off of: http://docs.ansible.com/ansible/latest/test_strategies.html 
 * Vagrant
   - Used to spin up scalable virtual machines that can be leveraged for producing consistent environments
-  - Uses VirtualBox to create virtualized environments
+  - Vagrant manages VirtualBox to create _n_ instances of the desired environment
   - VM Box OS - ubuntu/trusty64
   - Specified requiring Vagrant version 1.7.0 (or above)
 
