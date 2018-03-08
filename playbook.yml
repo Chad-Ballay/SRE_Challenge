@@ -1,5 +1,5 @@
 ---
-- name: Setup Secure Nginx webserver hosting Hello World page
+- name: Setup secure Nginx webserver (hosting Hello World page)
   hosts: all
   force_handlers: true # Force Tests to be Run
   vars:

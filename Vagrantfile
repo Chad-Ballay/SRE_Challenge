@@ -23,7 +23,8 @@ Vagrant.configure(2) do |config|
 
   # Set provisioning rules for Ansible:
   config.vm.provision "ansible" do |ansible|
-    ansible.verbose = "vvvv"
+    # ansible.verbose = "vvvv"
+    ansible.verbose = "v"
     ansible.playbook = "playbook.yml"
     ansible.become = true
   end
