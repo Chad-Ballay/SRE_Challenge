@@ -1,0 +1,152 @@
+---
+- name: Setting up Nginx Webserver
+  hosts: all
+  vars:
+    doc_root: /usr/share/nginx/html
+    nginx_root: /etc/nginx
+    private_ip: 192.168.50.4
+
+  tasks:
+    - name: Run 'apt-get update'
+      apt: 
+        update_cache: yes
+
+# TEST apt-get is up-to-date
+
+    - name: Install Nginx
+      apt: 
+        name: nginx 
+        state: latest
+      
+    ########################
+    # - CREATE Resources - #
+    ########################
+    - name: Create Nginx Directory for TLS/SSL Cert & Key Files
+      file:
+        path: "{{ nginx_root }}/ssl"
+        state: directory
+      notify: TEST ~ Verify Nginx SSL Dir Creation
+
+    - name: Create Nginx Backup Directory
+      file:
+        path: "{{ nginx_root }}/backup"
+        state: directory
+      notify: TEST ~ Verify Nginx Backup Dir Creation
+
+    - name: Create Document Backup Directory
+      file:
+        path: "{{ doc_root }}/backup"
+        state: directory
+      notify: TEST ~ Verify Document Backup Dir Creation
+
+    # NOTE - Self-cert creation command modfied from original source: https://serialized.net/2013/04/simply-generating-self-signed-ssl-certs-with-ansible/
+    - name: Generate a Self Signed OpenSSL certificate
+      command: openssl req -new -nodes -x509 -subj "/C=US/ST=Pennsylvania/L=Philadelphia/O=IT/CN={{ private_ip }}" -days 3650 -keyout {{ nginx_root }}/ssl/sre.key -out {{ nginx_root }}/ssl/sre.crt -extensions v3_ca creates={{ nginx_root }}/ssl/sre.crt
+
+    ####################
+    # - BACKUP Items - #
+    ####################
+    - name: Backup Original Nginx Conf
+      command: "mv {{ nginx_root }}/nginx.conf {{ nginx_root }}/backup/nginx.conf"
+# TEST FILE WAS MOVED
+
+    - name: Backup Original index.html
+      command: "mv {{ doc_root }}/index.html {{ doc_root }}/backup/index.html"
+# TEST FILE WAS MOVED
+
+
+    ################################
+    # - INSTALL Custom Resources - #
+    ################################
+    - name: Install Custom index.html
+      copy: 
+        src: index.html
+        dest: "{{ doc_root }}/index.html"
+
+    - name: Install Custom (TLS/SSL modified) Nginx Config File
+      template:
+        src: nginx.conf
+        dest: "{{ nginx_root }}/nginx.conf"
+        validate: "nginx -t -c %s" # TEST - Validate Nginx Config
+
+# Test State of UFW
+
+    ################################
+    # - CONFIGURE Nginx Firewall - #
+    ################################
+    - name: Allow HTTPS Traffic
+      command: ufw allow 'Nginx Full'
+
+    - name: Block HTTP Traffic
+      command: ufw delete allow 'Nginx HTTP'
+      notify:
+        
+    ########################################
+    # - RESTART Nginx & Init Final Tests - #
+    #######################################
+    - name: Restart Nginx
+      service: 
+        name: nginx 
+        state: restarted
+      notify:
+        - TEST ~ Ensure Port 80 is closed
+        - TEST ~ Ensure Port 443 is open
+
+# Test UFW was properly modified
+# TEST Nginx is running
+# Test access to site
+
+  #############
+  # - TESTS - #
+  #############
+  handlers:
+
+    # TEST FOR: Create Nginx Directory for TLS/SSL Cert & Key Files
+    - name: TEST ~ Verify Nginx SSL Dir Creation
+      wait_for:
+        path: "{{ nginx_root }}/ssl"
+        state: present
+        timeout: 1
+
+    # TEST FOR: Create Nginx Backup Directory
+    - name: TEST ~ Verify Nginx Backup Dir Creation
+      wait_for:
+        path: "{{ nginx_root }}/backup"
+        state: present
+        timeout: 1
+
+    # TEST FOR: Create Document Backup Directory
+    - name: TEST ~ Verify Document Backup Dir Creation
+      wait_for:
+        path: "{{ doc_root }}/backup"
+        state: present
+        timeout: 1
+
+    # TEST FOR: Restart Nginx
+    - name: TEST ~ Ensure Port 80 is closed
+      wait_for: 
+        host: "{{ private_ip }}"
+        port: 80
+        state: stopped
+        timeout: 1
+
+    # TEST FOR: Restart Nginx
+    - name: TEST ~ Ensure Port 443 is open
+      wait_for: 
+        host: "{{ private_ip }}"
+        port: 443
+        state: started
+        timeout: 1
+        
+    # - name: TEST - Nginx Running
+    #   command: service nginx status
+    #   ignore_errors: yes
+    #   changed_when: false
+    #   register: service_nginx_status
+    #   fail:
+    #     msg: |
+    #       Service nginx is not running.
+    #       Output of `service nginx status`:
+    #       {{ service_nginx_status.stdout }}
+    #       {{ service_nginx_status.stderr }}
+    #   when: service_nginx_status | failed
