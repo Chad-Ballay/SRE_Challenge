@@ -31,7 +31,7 @@ For this project, please think about how you would architect a scalable and secu
   - Used to spin up scalable virtual machines that can be leveraged for producing consistent environments
   - Vagrant manages VirtualBox to create _n_ instances of the desired environment
   - VM Box OS - ubuntu/trusty64
-    - OS source hosted by: [VagrantCloud](vagrantcloud.com)
+    - OS source hosted by: [VagrantCloud](https://vagrantcloud.com)
   - Specified requiring Vagrant version 1.7.0 (or above)
 
 <h2>How to Run</h2>
