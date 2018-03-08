@@ -1,4 +1,4 @@
-#SRE_Challenge
+<h1>SRE_Challenge</h1>
 
 ##Requirements
 For this project, please think about how you would architect a scalable and secure static web application in AWS or another IaaS provider.
