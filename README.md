@@ -44,3 +44,4 @@ For this project, please think about how you would architect a scalable and secu
 4. Once dependencies are installed, simply start up Vagrant and it will handle the rest
     - While in SRE_Challenge directory... run: `vagrant up`
 5. Navigate to [192.168.50.4](https://192.168.50.4) in your browser of choice
+    - Note: Will redirect to https, but is currently using a self-signed certificate
