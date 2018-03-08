@@ -23,6 +23,7 @@ For this project, please think about how you would architect a scalable and secu
 * Be prepared to walk though your code, discuss your thought process, and talk through how you might monitor and scale this application. You should also be able to demo a running instance of the host.
 
 <h2>Resources Used</h2>
+
 * Ansible
   - Automation tool that is used for configuration management, executing consistent server-side tasks, and web application deployments. This is Infrastructure as code.
   - Used Ansible modules to test server configuration & function, based off of ideas via: http://docs.ansible.com/ansible/latest/test_strategies.html 
@@ -33,6 +34,7 @@ For this project, please think about how you would architect a scalable and secu
   - Specified requiring Vagrant version 1.7.0 (or above)
 
 <h2>How to Run</h2>
+
 1. Clone repo to your local machine
 2. Once git clone has completed, navigate into the directory via Terminal
 3. Download & Install required dependencies
