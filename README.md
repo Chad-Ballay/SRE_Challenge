@@ -25,7 +25,7 @@ For this project, please think about how you would architect a scalable and secu
 <h2>Resources Used</h2>
 
 * Ansible
-  - Automation tool that is used for configuration management, executing consistent server-side tasks, and web application deployments. This is Infrastructure as Code.
+  - Automation tool that is used for configuration management, executing consistent server-side tasks, and web application deployments. This is "Infrastructure as Code".
   - Used Ansible modules to test server configuration & function, strategies used were based off of: http://docs.ansible.com/ansible/latest/test_strategies.html 
 * Vagrant
   - Used to spin up scalable virtual machines that can be leveraged for producing consistent environments
